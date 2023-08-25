@@ -1,6 +1,8 @@
+import { BackdropSizes } from "@/types";
 import axios from "axios";
 
-export const base = "https://api.themoviedb.org/3";
+const base = "https://api.themoviedb.org/3";
+const imgBase = "https://image.tmdb.org/t/p";
 
 export const apiClient = axios.create({
   baseURL: base,
@@ -9,6 +11,11 @@ export const apiClient = axios.create({
     Authorization: import.meta.env.VITE_TMDB_API_KEY,
   },
 });
+
+export function getIMG(path: string, size: BackdropSizes) {
+  const url = `${imgBase}/${size}/${path}`;
+  return url;
+}
 
 export function getURL(endpoint: string, params?: Record<string, string>) {
   const q = new URLSearchParams(params);
