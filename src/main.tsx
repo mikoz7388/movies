@@ -1,16 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-
-import "./global.css";
-
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient } from "@tanstack/react-query";
-import { ThemeProvider } from "./components/theme-provider.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Movie from "./components/Movie.tsx";
-import { apiClient } from "./lib/api.ts";
+
+import "./global.css";
+
+import App from "@/App.tsx";
+import Movie from "@/components/Movie.tsx";
+import { ThemeProvider } from "@/components/theme-provider.tsx";
+import { apiClient } from "@/lib/api.ts";
 
 const queryClient = new QueryClient();
 

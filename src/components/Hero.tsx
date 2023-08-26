@@ -10,16 +10,15 @@ export function Hero({ movie }: { movie: MovieListResult }) {
     );
     return response.data as MovieImages;
   });
-  // console.log("to", { data });
   return (
     <>
       <Link to={`/movies/${movie.id}`}>
-        <h2 className="text-4xl font-bold hover:underline mb-4">
+        <h2 className="mb-4 text-4xl font-bold hover:underline">
           {movie.title}
         </h2>
         {data ? (
           <img
-            className="w-full h-96 object-cover"
+            className="h-96 w-full object-cover"
             src={getBackdropImg(data.backdrops[0].file_path, "original")}
             alt={movie.title}
           />
