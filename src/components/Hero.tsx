@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { apiClient, getIMG as getBackdrop } from "./lib/api";
-import { MovieImages, MovieListResult } from "./types";
+import { apiClient, getIMG as getBackdropImg } from "../lib/api";
+import { MovieImages, MovieListResult } from "../types";
 import { Link } from "react-router-dom";
 
 export function Hero({ movie }: { movie: MovieListResult }) {
@@ -13,12 +13,14 @@ export function Hero({ movie }: { movie: MovieListResult }) {
   // console.log("to", { data });
   return (
     <>
-      <Link to={`/movie/${movie.id}`}>
-        <h1 className="text-4xl font-bold">{movie.title}</h1>
+      <Link to={`/movies/${movie.id}`}>
+        <h2 className="text-4xl font-bold hover:underline mb-4">
+          {movie.title}
+        </h2>
         {data ? (
           <img
             className="w-full h-96 object-cover"
-            src={getBackdrop(data.backdrops[0].file_path, "w1280")}
+            src={getBackdropImg(data.backdrops[0].file_path, "original")}
             alt={movie.title}
           />
         ) : null}

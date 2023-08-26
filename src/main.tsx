@@ -9,7 +9,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient } from "@tanstack/react-query";
 import { ThemeProvider } from "./components/theme-provider.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Header } from "./components/header.tsx";
+import Movie from "./components/Movie.tsx";
+import { apiClient } from "./lib/api.ts";
 
 const queryClient = new QueryClient();
 
@@ -17,10 +18,14 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-  },
-  {
-    path: "/movie",
-    element: <Header />,
+    children: [
+      {
+        path: "/movies/:id",
+        element: <Movie />,
+        loader: async ({ params }) =>
+          apiClient.get(`/movie/${params.id}`).then((res) => res.data),
+      },
+    ],
   },
 ]);
 
