@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api";
 import { MovieList } from "@/types";
 import { Hero } from "@/components/Hero";
+import { Carousel } from "./Carousel";
 
 export function Home() {
   const { data } = useQuery(["movies"], async () => {
@@ -13,6 +14,8 @@ export function Home() {
   return data ? (
     <>
       <Hero movie={data.results[0]} />
+      <h2>Trending today</h2>
+      <Carousel movies={data.results} />
     </>
   ) : null;
 }

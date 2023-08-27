@@ -61,7 +61,7 @@ function MoviePage() {
                   <div key={cast.id}>
                     {profile_path ? (
                       <img
-                        className="h-[200px] min-w-[150px]"
+                        className="min-w-[185px]"
                         src={getIMG(profile_path, {
                           type: "profile",
                           size: "w185",
