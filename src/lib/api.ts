@@ -1,4 +1,4 @@
-import { BackdropSizes } from "@/types";
+import { imgSizes, imgType } from "@/types";
 import axios from "axios";
 
 const base = "https://api.themoviedb.org/3";
@@ -12,8 +12,8 @@ export const apiClient = axios.create({
   },
 });
 
-export function getIMG(path: string, size: BackdropSizes) {
-  const url = `${imgBase}/${size}/${path}`;
+export function getIMG(path: string, imgType: imgType) {
+  const url = `${imgBase}/${imgType.size}/${path}`;
   return url;
 }
 

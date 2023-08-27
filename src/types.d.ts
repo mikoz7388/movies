@@ -59,6 +59,39 @@ export interface MovieDetails {
   vote_count: number;
 }
 
+export type MovieDetailsWithCredits = MovieDetails & { credits: MovieCredits };
+
+export interface MovieCredits {
+  id: number;
+  cast: {
+    adult: boolean;
+    gender: number;
+    id: number;
+    known_for_department: string;
+    name: string;
+    original_name: string;
+    popularity: number;
+    profile_path: string | null;
+    cast_id: number;
+    character: string;
+    credit_id: string;
+    order: number;
+  }[];
+  crew: {
+    adult: boolean;
+    gender: number;
+    id: number;
+    known_for_department: string;
+    name: string;
+    original_name: string;
+    popularity: number;
+    profile_path: string | null;
+    credit_id: string;
+    department: string;
+    job: string;
+  }[];
+}
+
 export interface Image {
   aspect_ratio: number;
   file_path: string;
@@ -115,6 +148,15 @@ export interface MovieList {
   total_pages: number;
   total_results: number;
 }
+
+export type imgSizes = BackdropSizes | logoSizes | posterSizes | profileSizes;
+
+type imgType =
+  | { type: "backdrop"; size: BackdropSizes }
+  | { type: "logo"; size: logoSizes }
+  | { type: "profile"; size: profileSizes }
+  | { type: "poster"; size: posterSizes }
+  | { type: "still"; size: stillSizes };
 
 export type BackdropSizes = "w300" | "w780" | "w1280" | "original";
 

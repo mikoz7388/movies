@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { apiClient, getIMG as getBackdropImg } from "../lib/api";
+import { apiClient, getIMG } from "../lib/api";
 import { MovieImages, MovieListResult } from "../types";
 import { Link } from "react-router-dom";
 
@@ -19,7 +19,10 @@ export function Hero({ movie }: { movie: MovieListResult }) {
         {data ? (
           <img
             className="w-full object-cover"
-            src={getBackdropImg(data.backdrops[0].file_path, "original")}
+            src={getIMG(data.backdrops[0].file_path, {
+              type: "backdrop",
+              size: "w1280",
+            })}
             alt={movie.title}
           />
         ) : null}

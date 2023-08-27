@@ -1,11 +1,12 @@
 import { useLoaderData } from "react-router-dom";
 
-import { MovieDetails } from "@/types";
+import { MovieDetailsWithCredits } from "@/types";
 import { getIMG } from "@/lib/api";
 import { Container } from "./ui/container";
 
 function MoviePage() {
-  const movie = useLoaderData() as MovieDetails;
+  const movie = useLoaderData() as MovieDetailsWithCredits;
+  console.log(movie);
 
   return (
     <>
@@ -13,7 +14,7 @@ function MoviePage() {
         <div className="shrink-0">
           <img
             className="w-[300px]"
-            src={getIMG(movie.poster_path, "w300")}
+            src={getIMG(movie.poster_path, { type: "poster", size: "w500" })}
             alt={`${movie.title} poster`}
           />
         </div>
@@ -23,10 +24,16 @@ function MoviePage() {
           <p>Budget: {movie.budget}$</p>
           <p>Total revenue: {movie.revenue}$</p>
           <p>Runtime: {movie.runtime} minutes</p>
+          <ul>
+            Genres:{" "}
+            {movie.genres.map((genre) => (
+              <li key={genre.id}>{genre.name}</li>
+            ))}
+          </ul>
         </div>
       </div>
       <Container>
-        {movie.videos.results.length > 0 ? (
+        {/* {movie.videos.results.length > 0 ? (
           <div>
             <h2 className="bold text-2xl">Videos</h2>
             <div className="flex max-w-[1280px] gap-4 overflow-x-scroll">
@@ -42,9 +49,34 @@ function MoviePage() {
               ))}
             </div>
           </div>
+        ) : null} */}
+
+        {movie.credits.cast.length > 0 ? (
+          <div>
+            <h2 className="bold text-2xl">Cast</h2>
+            <div className="flex max-w-[1280px] gap-4 overflow-x-scroll">
+              {movie.credits.cast.map((cast) => {
+                const profile_path = cast.profile_path;
+                return (
+                  <div key={cast.id}>
+                    {profile_path ? (
+                      <img
+                        className="h-[200px] min-w-[150px]"
+                        src={getIMG(profile_path, {
+                          type: "profile",
+                          size: "w185",
+                        })}
+                        alt={`${cast.name} profile`}
+                      />
+                    ) : null}
+                    <p>{cast.name}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         ) : null}
       </Container>
-      {/* <Container>{movie ? JSON.stringify(movie, null, 2) : null}</Container> */}
     </>
   );
 }

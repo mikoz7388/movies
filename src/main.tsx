@@ -32,7 +32,7 @@ const router = createBrowserRouter([
           //   .then((res) => res.data),
           apiClient
             .get(
-              `/movie/${params.id}?api_key=API_KEY&append_to_response=videos,images`
+              `/movie/${params.id}?api_key=API_KEY&append_to_response=videos,credits`
             )
             .then((res) => res.data),
       },
