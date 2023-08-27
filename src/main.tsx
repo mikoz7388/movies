@@ -8,7 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./global.css";
 
 import App from "@/App.tsx";
-import Movie from "@/components/Movie.tsx";
+import MoviePage from "@/components/MoviePage";
 import { ThemeProvider } from "@/components/theme-provider.tsx";
 import { apiClient } from "@/lib/api.ts";
 
@@ -18,12 +18,23 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <div>404</div>,
+
     children: [
       {
         path: "/movies/:id",
-        element: <Movie />,
+        element: <MoviePage />,
         loader: async ({ params }) =>
-          apiClient.get(`/movie/${params.id}`).then((res) => res.data),
+          // apiClient
+          //   .get(
+          //     `https://api.themoviedb.org/3/movie/157336?api_key=API_KEY&append_to_response=videos,images`
+          //   )
+          //   .then((res) => res.data),
+          apiClient
+            .get(
+              `/movie/${params.id}?api_key=API_KEY&append_to_response=videos,images`
+            )
+            .then((res) => res.data),
       },
     ],
   },

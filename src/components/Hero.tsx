@@ -18,7 +18,7 @@ export function Hero({ movie }: { movie: MovieListResult }) {
         </h2>
         {data ? (
           <img
-            className="h-96 w-full object-cover"
+            className="w-full object-cover"
             src={getBackdropImg(data.backdrops[0].file_path, "original")}
             alt={movie.title}
           />
