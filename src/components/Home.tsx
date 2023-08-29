@@ -12,11 +12,11 @@ export function Home() {
     return response.data as MovieList;
   });
   const { itemsPerPage } = useWindowWidth(300, 5);
+
   return data ? (
     <>
       <Hero movie={data.results[0]} />
       <h2>Trending today</h2>
-      <Carousel list={data.results} itemsPerPage={itemsPerPage} />
       <Carousel list={data.results} itemsPerPage={itemsPerPage} />
     </>
   ) : null;
