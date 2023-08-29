@@ -1,49 +1,28 @@
 import { useLoaderData } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
-import { MovieDetailsWithCredits } from "@/types";
-import { getIMG } from "@/lib/api";
+import { MovieDetailsWithCredits, MovieList } from "@/types";
+import { apiClient, getIMG } from "@/lib/api";
 import { Container } from "./ui/container";
-import { Button } from "./ui/button";
-import { PersonCarouselItem } from "./personCarouselItem";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-
-const TRANSISION_VALUE = 300;
-const IMG_WIDTH = 185;
+import { PersonCarousel } from "./PersonCarousel";
+import { Carousel } from "./Carousel";
+import { useQuery } from "@tanstack/react-query";
+import { useWindowWidth } from "@/hooks/useWindowWidth";
 
 function MoviePage() {
   const movie = useLoaderData() as MovieDetailsWithCredits;
+  console.log(movie);
+
+  const { data: similarMovies } = useQuery(
+    ["similarMovies", movie.id],
+    async () => {
+      const response = await apiClient.get(`/movie/${movie.id}/similar`);
+      return response.data as MovieList;
+    }
+  );
+  const { itemsPerPage } = useWindowWidth(300, 5);
 
   const carousel = useRef<HTMLDivElement>(null);
-
-  const [translateValue, setTranslateValue] = useState(0);
-
-  function translateCarousel(direction: "left" | "right") {
-    if (direction === "left") {
-      const newValue = translateValue + TRANSISION_VALUE;
-      if (newValue > 0) {
-        setTranslateValue(0);
-        return;
-      }
-
-      carousel.current!.style.transform = `translateX(${newValue}px)`;
-      setTranslateValue(newValue);
-      // console.log(translateValue);
-      return;
-    }
-    if (direction === "right") {
-      const newValue = translateValue - TRANSISION_VALUE;
-      if (newValue < -carousel.current!.clientWidth) {
-        setTranslateValue(-carousel.current!.clientWidth);
-        return;
-      }
-
-      carousel.current!.style.transform = `translateX(${newValue}px)`;
-      setTranslateValue(newValue);
-
-      return;
-    }
-  }
 
   return (
     <>
@@ -70,33 +49,16 @@ function MoviePage() {
         </div>
       </div>
       <Container>
+        <h2 className="bold mb-8 text-4xl">Top cast</h2>
+
         {movie.credits.cast.length > 0 ? (
-          <div className="relative mx-auto max-w-[1200px]">
-            <h2 className="bold text-2xl">Cast</h2>
-            <Button
-              disabled={translateValue === 0}
-              variant="outline"
-              onClick={() => translateCarousel("left")}
-              className="absolute left-0 top-2/4 z-10 aspect-square h-14 translate-x-[-50%] translate-y-[-50%] rounded-full"
-            >
-              <ChevronLeft />
-            </Button>
-            <div className=" flex  gap-4 overflow-x-clip">
-              <div className="flex gap-4 transition-transform " ref={carousel}>
-                {movie.credits.cast.map((cast) => (
-                  <PersonCarouselItem key={cast.id} cast={cast} />
-                ))}
-              </div>
-            </div>
-            <Button
-              className="absolute right-0 top-2/4 z-10 aspect-square h-14 translate-x-[50%] translate-y-[-50%] rounded-full"
-              variant="outline"
-              onClick={() => translateCarousel("right")}
-            >
-              <ChevronRight />
-            </Button>
-          </div>
+          <PersonCarousel cast={movie.credits.cast} carouselRef={carousel} />
         ) : null}
+        <h2 className="bold text-4xl">More like this</h2>
+
+        {similarMovies?.results && (
+          <Carousel list={similarMovies.results} itemsPerPage={itemsPerPage} />
+        )}
         {/* {movie.videos.results.length > 0 ? (
           <div>
             <h2 className="bold text-2xl">Videos</h2>

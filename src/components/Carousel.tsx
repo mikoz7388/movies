@@ -26,7 +26,7 @@ export function Carousel({ list, itemsPerPage }: CarouselProps) {
   }, [itemsPerPage]);
 
   return (
-    <div className="mb-24 flex min-h-[500px] flex-row items-center justify-between gap-4">
+    <div className="flex min-h-[500px] flex-row items-center justify-between gap-4">
       <Button
         variant="outline"
         onClick={() => paginate(currentPage - 1)}

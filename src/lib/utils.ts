@@ -22,7 +22,40 @@ export function debounce<T extends (...args: any[]) => void>(
     }, ms);
   };
 }
+export function translateCarousel(
+  direction: "left" | "right",
+  carousel: React.RefObject<HTMLDivElement>,
+  translateValue: number,
+  setTranslateValue: React.Dispatch<React.SetStateAction<number>>
+) {
+  const TRANSISION_VALUE = 300;
 
-export function translateX(value: number) {
-  return `${value}px`;
+  if (direction === "left") {
+    const newValue = translateValue + TRANSISION_VALUE;
+    if (newValue > 0) {
+      setTranslateValue(0);
+      carousel.current!.style.transform = `translateX(0px)`;
+      return;
+    }
+
+    carousel.current!.style.transform = `translateX(${newValue}px)`;
+    setTranslateValue(newValue);
+    // console.log(translateValue);
+    return;
+  }
+  if (direction === "right") {
+    const newValue = translateValue - TRANSISION_VALUE;
+    if (newValue < -carousel.current!.clientWidth) {
+      setTranslateValue(-carousel.current!.clientWidth);
+      carousel.current!.style.transform = `translateX(${-carousel.current!
+        .clientWidth}px)`;
+
+      return;
+    }
+
+    carousel.current!.style.transform = `translateX(${newValue}px)`;
+    setTranslateValue(newValue);
+
+    return;
+  }
 }

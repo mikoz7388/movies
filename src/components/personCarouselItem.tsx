@@ -7,7 +7,7 @@ interface PersonCarouselItemProps {
 
 export function PersonCarouselItem({ cast }: PersonCarouselItemProps) {
   return (
-    <div>
+    <div className="w-[185px] overflow-hidden rounded-lg bg-muted-foreground">
       {cast.profile_path ? (
         <img
           height={278}
@@ -29,7 +29,10 @@ export function PersonCarouselItem({ cast }: PersonCarouselItemProps) {
           alt={`${cast.name} profile`}
         />
       )}
-      <p>{cast.name}</p>
+      <div className="flex h-24 flex-col justify-between px-2 py-2 text-lg font-semibold text-background">
+        <p className="whitespace-pre-wrap">{cast.name}</p>
+        <p className="text-sm text-primary-foreground">{cast.character}</p>
+      </div>
     </div>
   );
 }
