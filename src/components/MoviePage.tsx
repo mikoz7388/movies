@@ -3,6 +3,7 @@ import { useLoaderData } from "react-router-dom";
 import { MovieDetailsWithCredits } from "@/types";
 import { getIMG } from "@/lib/api";
 import { Container } from "./ui/container";
+import { Carousel } from "./Carousel";
 
 function MoviePage() {
   const movie = useLoaderData() as MovieDetailsWithCredits;
@@ -51,6 +52,7 @@ function MoviePage() {
           </div>
         ) : null} */}
 
+        {/* <Carousel movies={movie.credits.cast} imagesPerPage={5} /> */}
         {movie.credits.cast.length > 0 ? (
           <div>
             <h2 className="bold text-2xl">Cast</h2>

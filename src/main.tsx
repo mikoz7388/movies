@@ -25,11 +25,6 @@ const router = createBrowserRouter([
         path: "/movies/:id",
         element: <MoviePage />,
         loader: async ({ params }) =>
-          // apiClient
-          //   .get(
-          //     `https://api.themoviedb.org/3/movie/157336?api_key=API_KEY&append_to_response=videos,images`
-          //   )
-          //   .then((res) => res.data),
           apiClient
             .get(
               `/movie/${params.id}?api_key=API_KEY&append_to_response=videos,credits`
