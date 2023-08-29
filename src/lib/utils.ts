@@ -22,13 +22,16 @@ export function debounce<T extends (...args: any[]) => void>(
     }, ms);
   };
 }
+
 export function translateCarousel(
   direction: "left" | "right",
   carousel: React.RefObject<HTMLDivElement>,
+  container: React.RefObject<HTMLDivElement>,
   translateValue: number,
   setTranslateValue: React.Dispatch<React.SetStateAction<number>>
 ) {
-  const TRANSISION_VALUE = 300;
+  const TRANSISION_VALUE = 185 + 16;
+  const containerWidth = container.current!.offsetWidth;
 
   if (direction === "left") {
     const newValue = translateValue + TRANSISION_VALUE;
@@ -40,15 +43,14 @@ export function translateCarousel(
 
     carousel.current!.style.transform = `translateX(${newValue}px)`;
     setTranslateValue(newValue);
-    // console.log(translateValue);
     return;
   }
   if (direction === "right") {
     const newValue = translateValue - TRANSISION_VALUE;
-    if (newValue < -carousel.current!.clientWidth) {
-      setTranslateValue(-carousel.current!.clientWidth);
-      carousel.current!.style.transform = `translateX(${-carousel.current!
-        .clientWidth}px)`;
+    const maxTranslateValue = containerWidth - carousel.current!.offsetWidth;
+    if (newValue < maxTranslateValue) {
+      setTranslateValue(maxTranslateValue);
+      carousel.current!.style.transform = `translateX(${maxTranslateValue}px)`;
 
       return;
     }
