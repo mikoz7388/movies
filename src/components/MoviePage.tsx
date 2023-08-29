@@ -1,13 +1,49 @@
 import { useLoaderData } from "react-router-dom";
+import { useRef, useState } from "react";
 
 import { MovieDetailsWithCredits } from "@/types";
 import { getIMG } from "@/lib/api";
 import { Container } from "./ui/container";
-import { Carousel } from "./Carousel";
+import { Button } from "./ui/button";
+import { PersonCarouselItem } from "./personCarouselItem";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+const TRANSISION_VALUE = 300;
+const IMG_WIDTH = 185;
 
 function MoviePage() {
   const movie = useLoaderData() as MovieDetailsWithCredits;
-  console.log(movie);
+
+  const carousel = useRef<HTMLDivElement>(null);
+
+  const [translateValue, setTranslateValue] = useState(0);
+
+  function translateCarousel(direction: "left" | "right") {
+    if (direction === "left") {
+      const newValue = translateValue + TRANSISION_VALUE;
+      if (newValue > 0) {
+        setTranslateValue(0);
+        return;
+      }
+
+      carousel.current!.style.transform = `translateX(${newValue}px)`;
+      setTranslateValue(newValue);
+      // console.log(translateValue);
+      return;
+    }
+    if (direction === "right") {
+      const newValue = translateValue - TRANSISION_VALUE;
+      if (newValue < -carousel.current!.clientWidth) {
+        setTranslateValue(-carousel.current!.clientWidth);
+        return;
+      }
+
+      carousel.current!.style.transform = `translateX(${newValue}px)`;
+      setTranslateValue(newValue);
+
+      return;
+    }
+  }
 
   return (
     <>
@@ -34,6 +70,33 @@ function MoviePage() {
         </div>
       </div>
       <Container>
+        {movie.credits.cast.length > 0 ? (
+          <div className="relative mx-auto max-w-[1200px]">
+            <h2 className="bold text-2xl">Cast</h2>
+            <Button
+              disabled={translateValue === 0}
+              variant="outline"
+              onClick={() => translateCarousel("left")}
+              className="absolute left-0 top-2/4 z-10 aspect-square h-14 translate-x-[-50%] translate-y-[-50%] rounded-full"
+            >
+              <ChevronLeft />
+            </Button>
+            <div className=" flex  gap-4 overflow-x-clip">
+              <div className="flex gap-4 transition-transform " ref={carousel}>
+                {movie.credits.cast.map((cast) => (
+                  <PersonCarouselItem key={cast.id} cast={cast} />
+                ))}
+              </div>
+            </div>
+            <Button
+              className="absolute right-0 top-2/4 z-10 aspect-square h-14 translate-x-[50%] translate-y-[-50%] rounded-full"
+              variant="outline"
+              onClick={() => translateCarousel("right")}
+            >
+              <ChevronRight />
+            </Button>
+          </div>
+        ) : null}
         {/* {movie.videos.results.length > 0 ? (
           <div>
             <h2 className="bold text-2xl">Videos</h2>
@@ -53,31 +116,7 @@ function MoviePage() {
         ) : null} */}
 
         {/* <Carousel movies={movie.credits.cast} imagesPerPage={5} /> */}
-        {movie.credits.cast.length > 0 ? (
-          <div>
-            <h2 className="bold text-2xl">Cast</h2>
-            <div className="flex max-w-[1280px] gap-4 overflow-x-scroll">
-              {movie.credits.cast.map((cast) => {
-                const profile_path = cast.profile_path;
-                return (
-                  <div key={cast.id}>
-                    {profile_path ? (
-                      <img
-                        className="min-w-[185px]"
-                        src={getIMG(profile_path, {
-                          type: "profile",
-                          size: "w185",
-                        })}
-                        alt={`${cast.name} profile`}
-                      />
-                    ) : null}
-                    <p>{cast.name}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        ) : null}
+        <div className="w-33 h-96">dd</div>
       </Container>
     </>
   );

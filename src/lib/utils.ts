@@ -22,3 +22,7 @@ export function debounce<T extends (...args: any[]) => void>(
     }, ms);
   };
 }
+
+export function translateX(value: number) {
+  return `${value}px`;
+}

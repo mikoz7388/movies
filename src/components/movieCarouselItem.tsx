@@ -5,11 +5,13 @@ import { Link } from "react-router-dom";
 
 export function MovieCarouselItem({ movie }: { movie: MovieListResult }) {
   return (
-    <div className="min-w-[300px] overflow-hidden rounded bg-muted">
+    <div className="overflow-hidden rounded bg-muted">
       <Link to={`/movies/${movie.id}`}>
         <div>
           <img
-            className="w-full object-cover"
+            className="object-cover"
+            width={342}
+            height={513}
             src={getIMG(movie.poster_path, {
               type: "poster",
               size: `w342`,

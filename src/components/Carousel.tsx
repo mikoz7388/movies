@@ -1,5 +1,5 @@
 import { MovieListResult } from "@/types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { MovieCarouselItem } from "./movieCarouselItem";
@@ -20,27 +20,30 @@ export function Carousel({ list, itemsPerPage }: CarouselProps) {
     setCurrentPage(pageNumber);
   };
 
+  useEffect(() => {
+    const maxPage = Math.ceil(list.length / itemsPerPage);
+    if (currentPage > maxPage) setCurrentPage(maxPage);
+  }, [itemsPerPage]);
+
   return (
-    <div className="mb-24 flex min-h-[500px] w-full flex-col items-center">
-      <div className="flex w-full place-items-center justify-between gap-4">
-        <Button
-          variant="outline"
-          onClick={() => paginate(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          <ArrowLeft />
-        </Button>
-        {currentItem.map((movie) => (
-          <MovieCarouselItem key={movie.id} movie={movie} />
-        ))}
-        <Button
-          variant="outline"
-          onClick={() => paginate(currentPage + 1)}
-          disabled={currentPage === Math.ceil(list.length / itemsPerPage)}
-        >
-          <ArrowRight />
-        </Button>
-      </div>
+    <div className="mb-24 flex min-h-[500px] flex-row items-center justify-between gap-4">
+      <Button
+        variant="outline"
+        onClick={() => paginate(currentPage - 1)}
+        disabled={currentPage === 1}
+      >
+        <ArrowLeft />
+      </Button>
+      {currentItem.map((movie) => (
+        <MovieCarouselItem key={movie.id} movie={movie} />
+      ))}
+      <Button
+        variant="outline"
+        onClick={() => paginate(currentPage + 1)}
+        disabled={currentPage === Math.ceil(list.length / itemsPerPage)}
+      >
+        <ArrowRight />
+      </Button>
     </div>
   );
 }
