@@ -1,7 +1,7 @@
 import { translateCarousel } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { PersonCarouselItem } from "./personCarouselItem";
+import { PersonCarouselItem } from "./PersonCarouselItem";
 import { useState, useRef } from "react";
 import { MovieDetailsWithCredits } from "@/types";
 
@@ -24,7 +24,10 @@ export function PersonCarousel({
   }
 
   return (
-    <div className="relative mx-auto my-8 max-w-[1200px]" ref={containerRef}>
+    <div
+      className="relative mx-auto my-8 h-full max-w-[1200px]"
+      ref={containerRef}
+    >
       <Button
         disabled={translateValue === 0}
         variant="outline"

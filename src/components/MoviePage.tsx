@@ -5,9 +5,8 @@ import { MovieDetailsWithCredits, MovieList } from "@/types";
 import { apiClient, getIMG } from "@/lib/api";
 import { Container } from "./ui/container";
 import { PersonCarousel } from "./PersonCarousel";
-import { Carousel } from "./Carousel";
+import { MovieCarousel } from "./MovieCarousel";
 import { useQuery } from "@tanstack/react-query";
-import { useWindowWidth } from "@/hooks/useWindowWidth";
 
 function MoviePage() {
   const movie = useLoaderData() as MovieDetailsWithCredits;
@@ -20,7 +19,6 @@ function MoviePage() {
       return response.data as MovieList;
     }
   );
-  const { itemsPerPage } = useWindowWidth(300, 5);
 
   const carousel = useRef<HTMLDivElement>(null);
 
@@ -57,7 +55,7 @@ function MoviePage() {
         <h2 className="bold text-4xl">More like this</h2>
 
         {similarMovies?.results && (
-          <Carousel list={similarMovies.results} itemsPerPage={itemsPerPage} />
+          <MovieCarousel list={similarMovies.results} />
         )}
         {/* {movie.videos.results.length > 0
           ? (console.log("to", movie.videos.results),
@@ -79,6 +77,7 @@ function MoviePage() {
               </div>
             ))
           : null} */}
+        <div className="h-96"></div>
       </Container>
     </>
   );

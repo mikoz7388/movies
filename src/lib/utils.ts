@@ -5,6 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function debounce<T extends (...args: any[]) => void>(
   fn: T,
   ms: number
@@ -30,34 +31,20 @@ export function translateCarousel(
   translateValue: number,
   setTranslateValue: React.Dispatch<React.SetStateAction<number>>
 ) {
-  const TRANSISION_VALUE = 185 + 16;
+  const TRANSITION_VALUE = 185 + 16;
   const containerWidth = container.current!.offsetWidth;
 
+  let newValue;
+
   if (direction === "left") {
-    const newValue = translateValue + TRANSISION_VALUE;
-    if (newValue > 0) {
-      setTranslateValue(0);
-      carousel.current!.style.transform = `translateX(0px)`;
-      return;
-    }
-
-    carousel.current!.style.transform = `translateX(${newValue}px)`;
-    setTranslateValue(newValue);
-    return;
-  }
-  if (direction === "right") {
-    const newValue = translateValue - TRANSISION_VALUE;
+    newValue = Math.min(0, translateValue + TRANSITION_VALUE);
+  } else if (direction === "right") {
     const maxTranslateValue = containerWidth - carousel.current!.offsetWidth;
-    if (newValue < maxTranslateValue) {
-      setTranslateValue(maxTranslateValue);
-      carousel.current!.style.transform = `translateX(${maxTranslateValue}px)`;
-
-      return;
-    }
-
-    carousel.current!.style.transform = `translateX(${newValue}px)`;
-    setTranslateValue(newValue);
-
-    return;
+    newValue = Math.max(maxTranslateValue, translateValue - TRANSITION_VALUE);
+  } else {
+    throw new Error("Invalid direction");
   }
+
+  carousel.current!.style.transform = `translateX(${newValue}px)`;
+  setTranslateValue(newValue);
 }

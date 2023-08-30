@@ -4,18 +4,22 @@ import { Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function MovieCarouselItem({ movie }: { movie: MovieListResult }) {
+  const src = movie.poster_path
+    ? getIMG(movie.poster_path, {
+        type: "poster",
+        size: `w342`,
+      })
+    : "https://placehold.co/342x513";
+
   return (
-    <div className="overflow-hidden rounded bg-muted">
+    <div className="h-full w-[200px] grow overflow-hidden rounded bg-muted">
       <Link to={`/movies/${movie.id}`}>
         <div>
           <img
             className="object-cover"
             width={342}
             height={513}
-            src={getIMG(movie.poster_path, {
-              type: "poster",
-              size: `w342`,
-            })}
+            src={src}
             alt={`${movie.title} poster`}
           />
         </div>
