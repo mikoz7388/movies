@@ -1,4 +1,4 @@
-import { imgSizes, imgType } from "@/types";
+import { imgType } from "@/types";
 import axios from "axios";
 
 const base = "https://api.themoviedb.org/3";

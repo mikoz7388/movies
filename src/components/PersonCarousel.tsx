@@ -15,12 +15,14 @@ export function PersonCarousel({
   const [translateValue, setTranslateValue] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   let buttonDisabled: number;
+
   if (containerRef.current && carouselRef.current) {
     buttonDisabled =
       containerRef.current.offsetWidth - carouselRef.current.offsetWidth;
   } else {
     buttonDisabled = 213769420;
   }
+
   return (
     <div className="relative mx-auto my-8 max-w-[1200px]" ref={containerRef}>
       <Button

@@ -11,7 +11,7 @@ import { useWindowWidth } from "@/hooks/useWindowWidth";
 
 function MoviePage() {
   const movie = useLoaderData() as MovieDetailsWithCredits;
-  console.log(movie);
+  console.log("rendererd");
 
   const { data: similarMovies } = useQuery(
     ["similarMovies", movie.id],
@@ -59,26 +59,26 @@ function MoviePage() {
         {similarMovies?.results && (
           <Carousel list={similarMovies.results} itemsPerPage={itemsPerPage} />
         )}
-        {/* {movie.videos.results.length > 0 ? (
-          <div>
-            <h2 className="bold text-2xl">Videos</h2>
-            <div className="flex max-w-[1280px] gap-4 overflow-x-scroll">
-              {movie.videos.results.map((video) => (
-                <div key={video.id}>
-                  <iframe
-                    className="h-[200px] w-[400px]"
-                    src={`https://www.youtube.com/embed/${video.key}`}
-                    title={video.name}
-                  ></iframe>
-                  <p>{video.name}</p>
+        {/* {movie.videos.results.length > 0
+          ? (console.log("to", movie.videos.results),
+            (
+              <div>
+                <h2 className="bold text-2xl">Videos</h2>
+                <div className="flex max-w-[1280px] gap-4 overflow-x-scroll">
+                  {movie.videos.results.map((video) => (
+                    <div key={video.id}>
+                      <iframe
+                        className="h-[200px] w-[400px]"
+                        src={`https://www.youtube.com/embed/${video.key}`}
+                        title={video.name}
+                      ></iframe>
+                      <p>{video.name}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        ) : null} */}
-
-        {/* <Carousel movies={movie.credits.cast} imagesPerPage={5} /> */}
-        <div className="w-33 h-96">dd</div>
+              </div>
+            ))
+          : null} */}
       </Container>
     </>
   );
