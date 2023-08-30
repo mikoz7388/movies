@@ -13,6 +13,7 @@ import App from "@/App.tsx";
 import MoviePage from "@/components/MoviePage";
 import { ThemeProvider } from "@/components/theme-provider.tsx";
 import { apiClient } from "@/lib/api.ts";
+import NotFoundPage from "./components/NotFoundPage";
 
 const queryClient = new QueryClient();
 
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <div>404</div>,
+    errorElement: <NotFoundPage />,
 
     children: [
       {
