@@ -10,7 +10,6 @@ import { useQuery } from "@tanstack/react-query";
 
 function MoviePage() {
   const movie = useLoaderData() as MovieDetailsWithCredits;
-  console.log("rendererd");
 
   const { data: similarMovies } = useQuery(
     ["similarMovies", movie.id],
@@ -47,7 +46,7 @@ function MoviePage() {
         </div>
       </div>
       <Container>
-        <h2 className="bold mb-8 text-4xl">Top cast</h2>
+        <h2 className="bold text-4xl">Top cast</h2>
 
         {movie.credits.cast.length > 0 ? (
           <PersonCarousel cast={movie.credits.cast} carouselRef={carousel} />

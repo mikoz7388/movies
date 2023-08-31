@@ -14,6 +14,7 @@ import MoviePage from "@/components/MoviePage";
 import { ThemeProvider } from "@/components/theme-provider.tsx";
 import { apiClient } from "@/lib/api.ts";
 import NotFoundPage from "./components/NotFoundPage";
+import { PersonPage } from "./components/person/PersonPage";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,17 @@ const router = createBrowserRouter([
           apiClient
             .get(
               `/movie/${params.id}?api_key=API_KEY&append_to_response=videos,credits`
+            )
+            .then((res) => res.data),
+      },
+      {
+        path: "/person/:id",
+        element: <PersonPage />,
+
+        loader: async ({ params }) =>
+          apiClient
+            .get(
+              `/person/${params.id}?api_key=API_KEY&append_to_response=movie_credits`
             )
             .then((res) => res.data),
       },

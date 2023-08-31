@@ -61,36 +61,35 @@ export interface MovieDetails {
 
 export type MovieDetailsWithCredits = MovieDetails & { credits: MovieCredits };
 
-export interface MovieCredits {
+type Cast = {
+  adult: boolean;
+  release_date: string;
+  gender: number;
   id: number;
-  cast: {
-    adult: boolean;
-    gender: number;
-    id: number;
-    known_for_department: string;
-    name: string;
-    original_name: string;
-    popularity: number;
-    profile_path: string | null;
-    cast_id: number;
-    character: string;
-    credit_id: string;
-    order: number;
-  }[];
-  crew: {
-    adult: boolean;
-    gender: number;
-    id: number;
-    known_for_department: string;
-    name: string;
-    original_name: string;
-    popularity: number;
-    profile_path: string | null;
-    credit_id: string;
-    department: string;
-    job: string;
-  }[];
-}
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string | null;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  order: number;
+};
+
+type Crew = {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string | null;
+  credit_id: string;
+  department: string;
+  job: string;
+};
 
 export interface Image {
   aspect_ratio: number;
@@ -180,3 +179,50 @@ export type posterSizes =
 export type profileSizes = "w45" | "w185" | "h632" | "original";
 
 export type stillSizes = "w92" | "w185" | "w300" | "original";
+
+export type PersonDetails = {
+  adult: boolean;
+  also_known_as: string[];
+  biography: string;
+  birthday: string | null;
+  deathday: string | null;
+  gender: number;
+  homepage: string | null;
+  id: number;
+  imdb_id: string;
+  known_for_department: string;
+  name: string;
+  place_of_birth: string | null;
+  popularity: number;
+  profile_path: string | null;
+};
+
+export type MovieCredits = {
+  id: number;
+  cast: Cast[];
+  crew: Crew[];
+};
+export type MovieCreditsCast = {
+  adult: boolean;
+  backdrop_path: string | null;
+  character: string;
+  credit_id: string;
+  genre_ids: number[];
+  id: number;
+  order: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string | null;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+};
+export type PersonDetailsMovieCredits = {
+  id: number;
+  cast: MovieCreditsCast[];
+  crew: Crew[];
+};
