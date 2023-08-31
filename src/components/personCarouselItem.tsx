@@ -1,38 +1,36 @@
 import { getIMG } from "@/lib/api";
 import { type MovieDetailsWithCredits } from "@/types";
+import { Link } from "react-router-dom";
 
 interface PersonCarouselItemProps {
   cast: MovieDetailsWithCredits["credits"]["cast"][0];
 }
 
 export function PersonCarouselItem({ cast }: PersonCarouselItemProps) {
+  const imageUrl = cast.profile_path
+    ? getIMG(cast.profile_path, {
+        type: "profile",
+        size: "w185",
+      })
+    : "https://placekitten.com/200/300";
+
   return (
-    <div className="w-[185px] overflow-hidden rounded-lg bg-muted-foreground">
-      {cast.profile_path ? (
+    <Link to={`/person/${cast.id}`}>
+      <div className="w-[185px] overflow-hidden rounded-lg bg-muted-foreground">
         <img
-          height={278}
-          width={185}
+          height={300}
+          width={200}
           loading="lazy"
           className="min-w-[185px]"
-          src={getIMG(cast.profile_path, {
-            type: "profile",
-            size: "w185",
-          })}
+          src={imageUrl}
           alt={`${cast.name} profile`}
         />
-      ) : (
-        <img
-          height={278}
-          width={185}
-          className="min-h-[278px] min-w-[185px]"
-          src="https://placekitten.com/185/278"
-          alt={`${cast.name} profile`}
-        />
-      )}
-      <div className="flex h-24 flex-col justify-between px-2 py-2 text-lg font-semibold text-background">
-        <p className="whitespace-pre-wrap">{cast.name}</p>
-        <p className="text-sm text-primary-foreground">{cast.character}</p>
+
+        <div className="flex h-24 flex-col justify-between px-2 py-2 text-lg font-semibold text-background">
+          <p className="whitespace-pre-wrap">{cast.name}</p>
+          <p className="text-sm text-primary-foreground">{cast.character}</p>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }

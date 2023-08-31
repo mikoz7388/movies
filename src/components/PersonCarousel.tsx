@@ -24,10 +24,7 @@ export function PersonCarousel({
   }
 
   return (
-    <div
-      className="relative mx-auto my-8 h-full max-w-[1200px]"
-      ref={containerRef}
-    >
+    <div className="relative mx-auto h-full max-w-[1200px]" ref={containerRef}>
       <Button
         disabled={translateValue === 0}
         variant="outline"
