@@ -1,5 +1,5 @@
 import { translateCarousel } from "@/lib/utils";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { PersonCarouselItem } from "./PersonCarouselItem";
 import { useState, useRef } from "react";

@@ -10,8 +10,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./global.css";
 
 import App from "@/App.tsx";
-import MoviePage from "@/components/MoviePage";
-import { ThemeProvider } from "@/components/theme-provider.tsx";
+import MoviePage from "@/components/movies/MoviePage";
+import { ThemeProvider } from "@/components/shared/theme-provider";
 import { apiClient } from "@/lib/api.ts";
 import NotFoundPage from "./components/NotFoundPage";
 import { PersonPage } from "./components/person/PersonPage";

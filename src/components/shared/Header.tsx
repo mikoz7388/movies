@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { ModeToggle } from "./mode-toggle";
-import { Input } from "./ui/input";
+import { ModeToggle } from "@/components/shared/mode-toggle";
+import { Input } from "@/components/ui/input";
 
 export function Header() {
   return (

@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 
 import { apiClient } from "@/lib/api";
 import { MovieList } from "@/types";
-import { Hero } from "@/components/Hero";
-import { MovieCarousel } from "./MovieCarousel";
+import { Hero } from "@/components/home/Hero";
+import { MovieCarousel } from "@/components/shared/MovieCarousel";
 
 export function Home() {
   const { data } = useQuery(["movies"], async () => {

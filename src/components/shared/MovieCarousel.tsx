@@ -2,8 +2,8 @@ import { MovieListResult } from "@/types";
 import { useState, useEffect } from "react";
 
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Button } from "./ui/button";
-import { MovieCarouselItem } from "@/components/MovieCarouselItem";
+import { Button } from "@/components/ui/button";
+import { MovieCarouselItem } from "@/components/shared/MovieCarouselItem";
 
 import { useElementSize } from "@/hooks/useElementSize";
 import { useNumberOfItemsPerView } from "@/hooks/useNumberOfItemsPerView";

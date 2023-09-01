@@ -1,7 +1,7 @@
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { Header } from "@/components/shared/Header";
+import { Footer } from "@/components/shared/Footer";
 import { Outlet, useLocation } from "react-router-dom";
-import { Home } from "@/components/Home";
+import { Home } from "@/components/home/Home";
 
 function App() {
   const location = useLocation();

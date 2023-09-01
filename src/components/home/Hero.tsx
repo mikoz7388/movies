@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { apiClient, getIMG } from "../lib/api";
-import { MovieImages, MovieListResult } from "../types";
-import { LoadingSpinner } from "./ui/loading-spiner";
+import { apiClient, getIMG } from "../../lib/api";
+import { MovieImages, MovieListResult } from "../../types";
+import { LoadingSpinner } from "../ui/loading-spiner";
 import { Link } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
