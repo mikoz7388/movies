@@ -31,7 +31,7 @@ const router = createBrowserRouter([
         loader: async ({ params }) =>
           apiClient
             .get(
-              `/movie/${params.id}?api_key=API_KEY&append_to_response=videos,credits`
+              `/movie/${params.id}?api_key=API_KEY&append_to_response=videos,credits,images`
             )
             .then((res) => res.data),
       },

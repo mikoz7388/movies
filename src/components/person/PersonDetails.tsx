@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { PersonDetails as TPersonDetails } from "@/types";
+import { PersonInfo } from "./PersonInfo";
 
 export function PersonDetails({
   person: { biography, birthday, place_of_birth, gender },
@@ -26,22 +27,11 @@ export function PersonDetails({
       <AccordionItem value="info">
         <AccordionTrigger>Personal Info</AccordionTrigger>
         <AccordionContent>
-          {
-            <>
-              <p>
-                <span className="font-semibold">Birthday:</span>{" "}
-                {birthday || "N/A"}
-              </p>
-              <p>
-                <span className="font-semibold">Place of Birth:</span>{" "}
-                {place_of_birth || "N/A"}
-              </p>
-              <p>
-                <span className="font-semibold">Gender:</span>{" "}
-                {gender === 1 ? "Female" : "Male"}
-              </p>
-            </>
-          }
+          <PersonInfo
+            birthday={birthday}
+            gender={gender}
+            place_of_birth={place_of_birth}
+          />
         </AccordionContent>
       </AccordionItem>
     </Accordion>

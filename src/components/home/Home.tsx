@@ -10,7 +10,6 @@ export function Home() {
     const response = await apiClient.get("/trending/movie/day");
     return response.data as MovieList;
   });
-
   return data ? (
     <>
       <Hero movie={data.results[0]} />

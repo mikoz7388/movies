@@ -13,7 +13,7 @@ interface SpokenLanguage {
   name: string;
 }
 
-export interface MovieDetails {
+export type MovieDetails = {
   adult: boolean;
   backdrop_path: string;
   budget: number;
@@ -57,9 +57,13 @@ export interface MovieDetails {
   };
   vote_average: number;
   vote_count: number;
-}
+};
 
-export type MovieDetailsWithCredits = MovieDetails & { credits: MovieCredits };
+export type MovieDetailsWithCredits = MovieDetails & {
+  credits: MovieCredits;
+  videos: { results: Video[] };
+  images: MovieImages;
+};
 
 type Cast = {
   adult: boolean;
@@ -115,7 +119,6 @@ export interface Video {
 }
 
 export interface MovieImages {
-  id: number;
   backdrops: Image[];
   posters: Image[];
 }
