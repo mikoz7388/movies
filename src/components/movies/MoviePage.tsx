@@ -7,6 +7,7 @@ import { Container } from "../ui/container";
 import { PersonCarousel } from "@/components/movies/PersonCarousel";
 import { MovieCarousel } from "@/components/shared/MovieCarousel";
 import { useQuery } from "@tanstack/react-query";
+import { MovieDetails } from "./MovieDetails";
 
 function MoviePage() {
   const movie = useLoaderData() as MovieDetailsWithCredits;
@@ -18,32 +19,27 @@ function MoviePage() {
       return response.data as MovieList;
     }
   );
-
+  console.log(movie);
   const carousel = useRef<HTMLDivElement>(null);
 
   return (
     <>
-      <div className="flex gap-8 p-8">
-        <div className="shrink-0">
+      <h1>
+        {movie.title}{" "}
+        {movie.release_date && <span>({movie.release_date.slice(0, 4)})</span>}
+      </h1>
+      <div className="container flex justify-between">
+        <div className="m-4 w-1/2">
           <img
-            className="w-[300px]"
-            src={getIMG(movie.poster_path, { type: "poster", size: "w500" })}
+            className="w-full"
+            src={getIMG(movie.backdrop_path, {
+              type: "backdrop",
+              size: "w780",
+            })}
             alt={`${movie.title} poster`}
           />
         </div>
-        <div>
-          <h1 className="bold text-3xl">{movie.title}</h1>
-          <p>{movie.overview}</p>
-          <p>Budget: {movie.budget}$</p>
-          <p>Total revenue: {movie.revenue}$</p>
-          <p>Runtime: {movie.runtime} minutes</p>
-          <ul>
-            Genres:{" "}
-            {movie.genres.map((genre) => (
-              <li key={genre.id}>{genre.name}</li>
-            ))}
-          </ul>
-        </div>
+        <MovieDetails movie={movie} />
       </div>
       <Container>
         <h2 className="bold text-4xl">Top cast</h2>
@@ -56,26 +52,7 @@ function MoviePage() {
         {similarMovies?.results && (
           <MovieCarousel list={similarMovies.results} />
         )}
-        {/* {movie.videos.results.length > 0
-          ? (console.log("to", movie.videos.results),
-            (
-              <div>
-                <h2 className="bold text-2xl">Videos</h2>
-                <div className="flex max-w-[1280px] gap-4 overflow-x-scroll">
-                  {movie.videos.results.map((video) => (
-                    <div key={video.id}>
-                      <iframe
-                        className="h-[200px] w-[400px]"
-                        src={`https://www.youtube.com/embed/${video.key}`}
-                        title={video.name}
-                      ></iframe>
-                      <p>{video.name}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))
-          : null} */}
+
         <div className="h-96"></div>
       </Container>
     </>

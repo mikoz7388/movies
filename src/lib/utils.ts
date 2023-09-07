@@ -48,3 +48,9 @@ export function translateCarousel(
   carousel.current!.style.transform = `translateX(${newValue}px)`;
   setTranslateValue(newValue);
 }
+
+export const currencyFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 0,
+});
