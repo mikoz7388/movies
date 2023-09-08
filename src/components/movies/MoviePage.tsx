@@ -3,7 +3,7 @@ import { useRef } from "react";
 
 import { MovieDetailsWithCredits, MovieList } from "@/types";
 import { apiClient, getIMG } from "@/lib/api";
-import { Container } from "../ui/container";
+import { Container } from "@/components/ui/container";
 import { PersonCarousel } from "@/components/movies/PersonCarousel";
 import { MovieCarousel } from "@/components/shared/MovieCarousel";
 import { useQuery } from "@tanstack/react-query";

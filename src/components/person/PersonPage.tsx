@@ -12,7 +12,6 @@ export function PersonPage() {
   const MostPopularMovies = person.movie_credits.cast.sort((a, b) => {
     return b.popularity - a.popularity;
   });
-  console.log(person);
 
   return (
     <div className="container mb-20 mt-4">

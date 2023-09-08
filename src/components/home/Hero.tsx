@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { apiClient, getIMG } from "../../lib/api";
-import { MovieImages, MovieListResult } from "../../types";
-import { LoadingSpinner } from "../ui/loading-spiner";
 import { Link } from "react-router-dom";
-// import { Link } from "react-router-dom";
+
+import { apiClient, getIMG } from "@/lib/api";
+import { MovieImages, MovieListResult } from "@/types";
+import { LoadingSpinner } from "@/components/ui/loading-spiner";
 
 export function Hero({ movie }: { movie: MovieListResult }) {
   const { data } = useQuery(["movies", `${movie.id}`], async () => {
@@ -26,7 +26,7 @@ export function Hero({ movie }: { movie: MovieListResult }) {
               <div
                 className="absolute inset-0 h-full w-full overflow-hidden bg-cover bg-center bg-no-repeat xl:rounded-3xl "
                 style={{
-                  backgroundImage: `url(${backgroundImgUrl})`, // Replace with your image URL
+                  backgroundImage: `url(${backgroundImgUrl})`,
                 }}
               ></div>
             )}

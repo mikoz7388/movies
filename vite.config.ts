@@ -11,7 +11,7 @@ export default defineConfig({
     eslint({ include: ["./src/**/*.ts", "./src/**/*.tsx"] }),
     svgr(),
     react({
-      jsxImportSource: "@welldone-software/why-did-you-render", // <-----
+      jsxImportSource: "@welldone-software/why-did-you-render",
     }),
   ],
   resolve: {
