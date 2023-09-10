@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import { LoaderFunction } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -54,3 +55,9 @@ export const currencyFormatter = new Intl.NumberFormat("en-US", {
   currency: "USD",
   minimumFractionDigits: 0,
 });
+
+export type LoaderData<TLoaderFn extends LoaderFunction> = Awaited<
+  ReturnType<TLoaderFn>
+> extends Response | infer D
+  ? D
+  : never;

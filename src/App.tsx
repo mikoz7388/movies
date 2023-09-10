@@ -6,7 +6,7 @@ import { Home } from "@/components/home/Home";
 function App() {
   const location = useLocation();
 
-  console.log("rendering app");
+  console.log("rendering App");
 
   return (
     <>

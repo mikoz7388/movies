@@ -16,14 +16,22 @@ import { apiClient } from "@/lib/api.ts";
 import NotFoundPage from "./components/NotFoundPage";
 import { PersonPage } from "./components/person/PersonPage";
 
+import { LoaderFunction } from "react-router-dom";
+import { MovieList } from "./types";
+
 const queryClient = new QueryClient();
+
+export const HomeLoader = (async () => {
+  const response = await apiClient.get("/trending/movie/day");
+  return response.data as MovieList;
+}) satisfies LoaderFunction;
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     errorElement: <NotFoundPage />,
-
+    loader: HomeLoader,
     children: [
       {
         path: "/movies/:id",

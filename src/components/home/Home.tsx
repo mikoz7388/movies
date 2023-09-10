@@ -1,16 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
-
-import { apiClient } from "@/lib/api";
-import { MovieList } from "@/types";
 import { Hero } from "@/components/home/Hero";
 import { MovieCarousel } from "@/components/shared/MovieCarousel";
+import { useLoaderData } from "react-router-dom";
+
+import { HomeLoader } from "@/main";
+import { type LoaderData } from "@/lib/utils";
 
 export function Home() {
-  const { data } = useQuery(["movies"], async () => {
-    const response = await apiClient.get("/trending/movie/day");
-    return response.data as MovieList;
-  });
-  return data ? (
+  const data = useLoaderData() as LoaderData<typeof HomeLoader>;
+
+  return (
     <>
       <Hero movie={data.results[0]} />
       <section className="">
@@ -19,5 +17,5 @@ export function Home() {
       </section>
       <div className="h-96"></div>
     </>
-  ) : null;
+  );
 }
