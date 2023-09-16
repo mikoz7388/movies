@@ -15,6 +15,7 @@ import { ThemeProvider } from "@/components/shared/theme-provider";
 import { apiClient } from "@/lib/api.ts";
 import NotFoundPage from "./components/NotFoundPage";
 import { PersonPage } from "./components/person/PersonPage";
+import { SearchPage } from "./components/search/SearchPage";
 
 import { LoaderFunction } from "react-router-dom";
 import { MovieList } from "./types";
@@ -52,6 +53,14 @@ const router = createBrowserRouter([
             .get(
               `/person/${params.id}?api_key=API_KEY&append_to_response=movie_credits`
             )
+            .then((res) => res.data),
+      },
+      {
+        path: "/search/:query",
+        element: <SearchPage />,
+        loader: async ({ params }) =>
+          apiClient
+            .get(`/search/multi?api_key=API_KEY&query=${params.query}`)
             .then((res) => res.data),
       },
     ],
