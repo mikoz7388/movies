@@ -1,66 +1,77 @@
-import { translateCarousel } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { RefObject, useRef } from "react";
 import { PersonCarouselItem } from "./PersonCarouselItem";
-import { useState, useRef } from "react";
 import { MovieDetailsWithCredits } from "@/types";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-export function PersonCarousel({
-  carouselRef,
-  cast,
-}: {
-  carouselRef: React.RefObject<HTMLDivElement>;
+type PersonCarouselProps = {
+  carouselRef: RefObject<HTMLDivElement>;
   cast: MovieDetailsWithCredits["credits"]["cast"];
-}) {
-  const [translateValue, setTranslateValue] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  let buttonDisabled: number;
+};
 
-  if (containerRef.current && carouselRef.current) {
-    buttonDisabled =
-      containerRef.current.offsetWidth - carouselRef.current.offsetWidth;
-  } else {
-    buttonDisabled = 213769420;
-  }
+export function PersonCarousel({ carouselRef, cast }: PersonCarouselProps) {
+  const scrollBy = 185 + 16;
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleScroll = (direction: "left" | "right") => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({
+        left: direction === "left" ? -scrollBy : scrollBy,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const startAutoScroll = (direction: "left" | "right") => {
+    handleScroll(direction);
+    intervalRef.current = setInterval(() => handleScroll(direction), 300);
+  };
+
+  const stopAutoScroll = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
 
   return (
-    <div className="relative mx-auto h-full max-w-[1200px]" ref={containerRef}>
+    <div className="relative mx-auto h-full max-w-screen-xl">
       <Button
-        disabled={translateValue === 0}
+        type="button"
         variant="outline"
-        onClick={() =>
-          translateCarousel(
-            "left",
-            carouselRef,
-            containerRef,
-            translateValue,
-            setTranslateValue
-          )
-        }
-        className="absolute left-0 top-2/4 z-10 aspect-square h-14 translate-x-[-50%] translate-y-[-50%] rounded-full"
+        className="absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded-full p-2 transition-transform active:scale-95"
+        onClick={() => handleScroll("left")}
+        onMouseDown={() => startAutoScroll("left")}
+        onMouseUp={stopAutoScroll}
+        onMouseLeave={stopAutoScroll}
+        onTouchStart={() => startAutoScroll("left")}
+        onTouchEnd={stopAutoScroll}
+        aria-label="Scroll left"
       >
         <ChevronLeft />
       </Button>
-      <div className=" flex  gap-4 overflow-x-clip">
-        <div className="flex gap-4 transition-transform " ref={carouselRef}>
-          {cast.map((cast) => (
-            <PersonCarouselItem key={cast.id} cast={cast} />
-          ))}
-        </div>
+      <div
+        ref={carouselRef}
+        className="scrollbar-hide flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-8"
+        style={{ scrollPaddingLeft: 16, scrollPaddingRight: 16 }}
+      >
+        {cast.map((person) => (
+          <div key={person.id} className="snap-start">
+            <PersonCarouselItem cast={person} />
+          </div>
+        ))}
       </div>
       <Button
-        className="absolute right-0 top-2/4 z-10 aspect-square h-14 translate-x-[50%] translate-y-[-50%] rounded-full"
+        type="button"
         variant="outline"
-        disabled={translateValue === buttonDisabled}
-        onClick={() =>
-          translateCarousel(
-            "right",
-            carouselRef,
-            containerRef,
-            translateValue,
-            setTranslateValue
-          )
-        }
+        className="absolute right-0 top-1/2 z-10 -translate-y-1/2 rounded-full p-2 transition-transform active:scale-95"
+        onClick={() => handleScroll("right")}
+        onMouseDown={() => startAutoScroll("right")}
+        onMouseUp={stopAutoScroll}
+        onMouseLeave={stopAutoScroll}
+        onTouchStart={() => startAutoScroll("right")}
+        onTouchEnd={stopAutoScroll}
+        aria-label="Scroll right"
       >
         <ChevronRight />
       </Button>
