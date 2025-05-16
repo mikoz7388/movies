@@ -34,20 +34,25 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 flex items-center bg-background py-4 transition-all duration-200 ${
+      className={`sticky top-0 z-50 bg-background transition-all duration-300 ${
         atTop
           ? "border-b border-b-foreground opacity-100"
           : "border-b-0 opacity-80"
       }`}
     >
-      <Link
-        to="/"
-        className={`ml-8 w-14 ${atTop ? "scale-100" : "scale-[0.8]"}`}
-      >
-        <img src={logo} alt="Cool Movies logo" />
-      </Link>
-      <div className="container mx-auto flex w-full items-center justify-between p-4">
-        <div className="flex items-center  gap-4">
+      <div className="container mx-auto flex w-full items-center justify-between py-4">
+        <Link
+          to="/"
+          className={`flex w-14 items-center transition ${
+            atTop ? "scale-100" : "scale-[0.8]"
+          }`}
+        >
+          <img src={logo} alt="Cool Movies logo" />
+          <h1 className="ml-4 hidden items-center self-center text-3xl text-foreground 2xl:flex">
+            Cool Movies
+          </h1>
+        </Link>
+        <div className="flex items-center gap-6">
           <form
             onSubmit={handleSearch}
             role="search"
@@ -56,7 +61,7 @@ export function Header() {
           >
             <Input
               placeholder="Search for a movie"
-              className="w-96 pr-20"
+              className="h-14 w-[28rem] pr-20 text-xl"
               value={query}
               onChange={handleInputChange}
               aria-label="Search movies"
@@ -69,7 +74,7 @@ export function Header() {
                 aria-label="Clear search"
                 tabIndex={0}
               >
-                <X size={20} />
+                <X size={24} />
               </button>
             )}
             <button
@@ -77,11 +82,13 @@ export function Header() {
               className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground"
               aria-label="Search"
             >
-              <Search size={20} />
+              <Search size={24} />
             </button>
           </form>
+          <div className="scale-125">
+            <ModeToggle />
+          </div>
         </div>
-        <ModeToggle />
       </div>
     </header>
   );
