@@ -1,10 +1,7 @@
-// import "./wdyr.ts";
-
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { QueryClient } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import "./global.css";
@@ -12,56 +9,39 @@ import "./global.css";
 import App from "@/App.tsx";
 import MoviePage from "@/components/movies/MoviePage";
 import { ThemeProvider } from "@/components/shared/theme-provider";
-import { apiClient } from "@/lib/api.ts";
 import NotFoundPage from "./components/NotFoundPage";
 import { PersonPage } from "./components/person/PersonPage";
 import { SearchPage } from "./components/search/SearchPage";
-
-import { LoaderFunction } from "react-router-dom";
-import { MovieList } from "./types";
+import { Home } from "@/components/home/Home";
+import { HomeLoader, MovieLoader, PersonLoader, SearchLoader } from "@/loaders";
 
 const queryClient = new QueryClient();
-
-export const HomeLoader = (async () => {
-  const response = await apiClient.get("/trending/movie/day");
-  return response.data as MovieList;
-}) satisfies LoaderFunction;
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     errorElement: <NotFoundPage />,
-    loader: HomeLoader,
     children: [
+      {
+        index: true,
+        element: <Home />,
+        loader: HomeLoader,
+      },
       {
         path: "/movies/:id",
         element: <MoviePage />,
-        loader: async ({ params }) =>
-          apiClient
-            .get(
-              `/movie/${params.id}?api_key=API_KEY&append_to_response=videos,credits,images`
-            )
-            .then((res) => res.data),
+        loader: MovieLoader,
       },
       {
         path: "/person/:id",
         element: <PersonPage />,
-
-        loader: async ({ params }) =>
-          apiClient
-            .get(
-              `/person/${params.id}?api_key=API_KEY&append_to_response=movie_credits`
-            )
-            .then((res) => res.data),
+        loader: PersonLoader,
       },
       {
         path: "/search/:query",
         element: <SearchPage />,
-        loader: async ({ params }) =>
-          apiClient
-            .get(`/search/multi?api_key=API_KEY&query=${params.query}`)
-            .then((res) => res.data),
+        loader: SearchLoader,
       },
     ],
   },

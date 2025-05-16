@@ -10,9 +10,7 @@ export default defineConfig({
     checker({ typescript: true }),
     eslint({ include: ["./src/**/*.ts", "./src/**/*.tsx"] }),
     svgr(),
-    react({
-      jsxImportSource: "@welldone-software/why-did-you-render",
-    }),
+    react(),
   ],
   resolve: {
     alias: {

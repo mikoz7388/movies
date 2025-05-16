@@ -1,8 +1,6 @@
 import { imgType } from "@/types";
 import axios from "axios";
-
-const base = "https://api.themoviedb.org/3";
-const imgBase = "https://image.tmdb.org/t/p";
+import { base, imgBase } from "./constants";
 
 export const apiClient = axios.create({
   baseURL: base,
