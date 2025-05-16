@@ -21,7 +21,7 @@ export function PersonCard({ person }: PersonCardProps) {
           <img
             src={imageUrl}
             alt={`${person.name}'s profile`}
-            className="mr-4 h-32 w-32 rounded-full object-cover object-center"
+            className="mr-4 size-32 rounded-full object-cover object-center"
           />
         )}
         <div className="mt-4">

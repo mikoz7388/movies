@@ -1,38 +1,66 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ModeToggle } from "@/components/shared/mode-toggle";
 import { Input } from "@/components/ui/input";
-
 import logo from "@/assets/logo.svg";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, FormEvent } from "react";
+import { X, Search } from "lucide-react";
 
 export function Header() {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setQuery(value);
+    setQuery(e.target.value);
   };
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    navigate(`/search/${query}`);
+    if (query.trim()) {
+      navigate(`/search/${encodeURIComponent(query.trim())}`);
+      setQuery("");
+    }
   };
+
+  const handleClear = () => setQuery("");
 
   return (
     <header className="sticky top-0 z-50 border border-b-foreground bg-background shadow-lg">
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-between p-4 px-4 ">
-        <div className="flex place-content-center gap-4">
+      <div className="container mx-auto flex w-full items-center justify-between p-4">
+        <div className="flex items-center gap-4">
           <Link to="/">
-            <img src={logo} alt="Vite Logo" className="w-14" />
+            <img src={logo} alt="Cool Movies logo" className="w-14" />
           </Link>
-          <form onSubmit={handleSearch}>
+          <form
+            onSubmit={handleSearch}
+            role="search"
+            aria-label="Movie search"
+            className="relative flex items-center"
+          >
             <Input
               placeholder="Search for a movie"
-              className="max-w-lg"
+              className="w-96 pr-20"
               value={query}
-              onChange={(e) => handleInputChange(e)}
+              onChange={handleInputChange}
+              aria-label="Search movies"
             />
+            {query && (
+              <button
+                type="button"
+                onClick={handleClear}
+                className="absolute right-12 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground"
+                aria-label="Clear search"
+                tabIndex={0}
+              >
+                <X size={20} />
+              </button>
+            )}
+            <button
+              type="submit"
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground"
+              aria-label="Search"
+            >
+              <Search size={20} />
+            </button>
           </form>
         </div>
         <ModeToggle />

@@ -31,7 +31,7 @@ export function MovieCarouselItem({ movie }: { movie: MovieListResult }) {
           </h2>
         </Link>
         <div className="flex items-center">
-          <Star className="mr-1 inline-block h-4 w-4" stroke="red" />
+          <Star className="mr-1 inline-block size-4" stroke="red" />
           {movie.vote_average.toFixed(1)}
         </div>
       </div>

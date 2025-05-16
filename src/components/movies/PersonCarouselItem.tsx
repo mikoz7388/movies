@@ -26,7 +26,7 @@ export function PersonCarouselItem({ cast }: PersonCarouselItemProps) {
           alt={`${cast.name} profile`}
         />
 
-        <div className="flex h-24 flex-col justify-between px-2 py-2 text-lg font-semibold text-background">
+        <div className="flex h-24 flex-col justify-between p-2 text-lg font-semibold text-background">
           <p className="whitespace-pre-wrap">{cast.name}</p>
           <p className="text-sm text-primary-foreground">{cast.character}</p>
         </div>
