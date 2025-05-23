@@ -9,7 +9,7 @@ import { MovieDetailsWithCredits } from "@/types";
 
 export function MovieDetails({ movie }: { movie: MovieDetailsWithCredits }) {
   return (
-    <Accordion type="single" collapsible className="w-1/2">
+    <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="overview">
         <AccordionTrigger>Overview</AccordionTrigger>
         <AccordionContent>

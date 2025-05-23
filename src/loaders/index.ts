@@ -32,14 +32,3 @@ export const PersonLoader: LoaderFunction = async ({ params }) => {
     throw new Response("Failed to load person details", { status: 500 });
   }
 };
-
-export const SearchLoader: LoaderFunction = async ({ params }) => {
-  try {
-    const response = await apiClient.get(
-      `/search/multi?query=${params?.query}`
-    );
-    return response.data;
-  } catch {
-    throw new Response("Failed to load search results", { status: 500 });
-  }
-};

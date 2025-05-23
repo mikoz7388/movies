@@ -1,6 +1,6 @@
-import { imgType } from "@/types";
 import axios from "axios";
 import { base, imgBase } from "./constants";
+import { ImgType } from "@/types";
 
 export const apiClient = axios.create({
   baseURL: base,
@@ -10,7 +10,7 @@ export const apiClient = axios.create({
   },
 });
 
-export function getIMG(path: string, imgType: imgType) {
+export function getIMG(path: string, imgType: ImgType) {
   const url = `${imgBase}/${imgType.size}/${path}`;
   return url;
 }

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { ModeToggle } from "@/components/shared/mode-toggle";
 import { Input } from "@/components/ui/input";
 import logo from "@/assets/logo.svg";
@@ -6,9 +6,15 @@ import { ChangeEvent, useState, FormEvent, useEffect } from "react";
 import { X, Search } from "lucide-react";
 
 export function Header() {
-  const [query, setQuery] = useState("");
   const [atTop, setAtTop] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const queryParam = searchParams.get("query") || "";
+  const [query, setQuery] = useState(queryParam);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setQuery(queryParam);
+  }, [queryParam]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,12 +31,16 @@ export function Header() {
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (query.trim()) {
-      navigate(`/search/${encodeURIComponent(query.trim())}`);
-      setQuery("");
+      setSearchParams({ query: query.trim(), page: "1" });
+      navigate(`/search?q=${encodeURIComponent(query.trim())}&page=1`);
     }
   };
 
-  const handleClear = () => setQuery("");
+  const handleClear = () => {
+    setQuery("");
+    setSearchParams({});
+    navigate("/");
+  };
 
   return (
     <header

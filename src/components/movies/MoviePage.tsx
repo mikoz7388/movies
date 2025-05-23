@@ -31,8 +31,8 @@ function MoviePage() {
           )}
         </h1>
       </header>
-      <div className="container flex flex-col gap-8 md:flex-row md:justify-between">
-        <div className="m-4 w-full shrink-0 md:w-1/2">
+      <div className="container flex flex-col gap-8 md:justify-between lg:flex-row">
+        <div className="m-4 w-full shrink-0 lg:w-1/2">
           <div className="relative h-80 w-full md:h-[32rem]">
             <img
               className="size-full rounded-xl object-cover shadow-lg"

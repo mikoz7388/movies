@@ -81,20 +81,6 @@ type Cast = {
   order: number;
 };
 
-type Crew = {
-  adult: boolean;
-  gender: number;
-  id: number;
-  known_for_department: string;
-  name: string;
-  original_name: string;
-  popularity: number;
-  profile_path: string | null;
-  credit_id: string;
-  department: string;
-  job: string;
-};
-
 export interface Image {
   aspect_ratio: number;
   file_path: string;
@@ -153,7 +139,7 @@ export interface MovieList {
 
 export type imgSizes = BackdropSizes | logoSizes | posterSizes | profileSizes;
 
-type imgType =
+export type ImgType =
   | { type: "backdrop"; size: BackdropSizes }
   | { type: "logo"; size: logoSizes }
   | { type: "profile"; size: profileSizes }
@@ -203,7 +189,7 @@ export type PersonDetails = {
 export type MovieCredits = {
   id: number;
   cast: Cast[];
-  crew: Crew[];
+  crew: Person[];
 };
 export type MovieCreditsCast = {
   adult: boolean;
@@ -227,5 +213,53 @@ export type MovieCreditsCast = {
 export type PersonDetailsMovieCredits = {
   id: number;
   cast: MovieCreditsCast[];
-  crew: Crew[];
+  crew: Person[];
+};
+
+export type Movie = {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+};
+
+export type Person = {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string | null;
+  credit_id: string;
+  department: string;
+  job: string;
+};
+
+export type Tv = {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  origin_country: string[];
+  original_language: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  first_air_date: string;
+  name: string;
+  vote_average: number;
+  vote_count: number;
 };

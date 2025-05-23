@@ -11,9 +11,9 @@ import MoviePage from "@/components/movies/MoviePage";
 import { ThemeProvider } from "@/components/shared/theme-provider";
 import NotFoundPage from "./components/NotFoundPage";
 import { PersonPage } from "./components/person/PersonPage";
-import { SearchPage } from "./components/search/SearchPage";
 import { Home } from "@/components/home/Home";
-import { HomeLoader, MovieLoader, PersonLoader, SearchLoader } from "@/loaders";
+import { HomeLoader, MovieLoader, PersonLoader } from "@/loaders";
+import { SearchResults } from "./components/search/SearchResults";
 
 const queryClient = new QueryClient();
 
@@ -39,9 +39,8 @@ const router = createBrowserRouter([
         loader: PersonLoader,
       },
       {
-        path: "/search/:query",
-        element: <SearchPage />,
-        loader: SearchLoader,
+        path: "/search/",
+        element: <SearchResults />,
       },
     ],
   },
