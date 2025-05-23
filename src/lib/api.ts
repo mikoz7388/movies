@@ -14,10 +14,3 @@ export function getIMG(path: string, imgType: ImgType) {
   const url = `${imgBase}/${imgType.size}/${path}`;
   return url;
 }
-
-export function getURL(endpoint: string, params?: Record<string, string>) {
-  const q = new URLSearchParams(params);
-  const url = `${base}/${endpoint}?${q}`;
-
-  return url;
-}
