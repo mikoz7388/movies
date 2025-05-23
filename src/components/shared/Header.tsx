@@ -1,8 +1,8 @@
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { ModeToggle } from "@/components/shared/mode-toggle";
+import { ThemeToggle } from "@/components/shared/mode-toggle";
 import { Input } from "@/components/ui/input";
 import logo from "@/assets/logo.svg";
-import { ChangeEvent, useState, FormEvent, useEffect } from "react";
+import { ChangeEvent, useState, FormEvent, useEffect, useRef } from "react";
 import { X, Search } from "lucide-react";
 
 export function Header() {
@@ -11,6 +11,7 @@ export function Header() {
   const queryParam = searchParams.get("query") || "";
   const [query, setQuery] = useState(queryParam);
   const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setQuery(queryParam);
@@ -33,13 +34,14 @@ export function Header() {
     if (query.trim()) {
       setSearchParams({ query: query.trim(), page: "1" });
       navigate(`/search?q=${encodeURIComponent(query.trim())}&page=1`);
+      inputRef.current?.blur();
     }
+    setQuery("");
   };
 
   const handleClear = () => {
     setQuery("");
     setSearchParams({});
-    navigate("/");
   };
 
   return (
@@ -58,7 +60,7 @@ export function Header() {
           }`}
         >
           <img src={logo} alt="Cool Movies logo" />
-          <h1 className="ml-4 hidden items-center self-center text-3xl text-foreground 2xl:flex">
+          <h1 className="ml-4 hidden items-center self-center text-2xl text-foreground 2xl:flex">
             Cool Movies
           </h1>
         </Link>
@@ -70,8 +72,9 @@ export function Header() {
             className="relative flex items-center"
           >
             <Input
+              ref={inputRef}
               placeholder="Search for a movie"
-              className="h-14 w-[28rem] pr-20 text-xl"
+              className="h-10 max-w-[500px] pr-20 text-lg"
               value={query}
               onChange={handleInputChange}
               aria-label="Search movies"
@@ -84,7 +87,7 @@ export function Header() {
                 aria-label="Clear search"
                 tabIndex={0}
               >
-                <X size={24} />
+                <X size={20} />
               </button>
             )}
             <button
@@ -92,11 +95,11 @@ export function Header() {
               className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground"
               aria-label="Search"
             >
-              <Search size={24} />
+              <Search size={20} />
             </button>
           </form>
-          <div className="scale-125">
-            <ModeToggle />
+          <div>
+            <ThemeToggle />
           </div>
         </div>
       </div>
