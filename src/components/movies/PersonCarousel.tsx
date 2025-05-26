@@ -1,4 +1,4 @@
-import { RefObject, useRef } from "react";
+import { RefObject, useRef, useState, useEffect, useCallback } from "react";
 import { PersonCarouselItem } from "./PersonCarouselItem";
 import { MovieDetailsWithCredits } from "@/types";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -13,12 +13,32 @@ export function PersonCarousel({ carouselRef, cast }: PersonCarouselProps) {
   const scrollBy = 185 + 16;
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
+
+  const checkScrollPosition = useCallback(() => {
+    if (carouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+      setAtStart(scrollLeft <= 2);
+      setAtEnd(Math.ceil(scrollLeft + clientWidth) >= scrollWidth);
+    }
+  }, [carouselRef, setAtStart, setAtEnd]);
+
+  useEffect(() => {
+    const node = carouselRef.current;
+    if (!node) return;
+    node.addEventListener("scroll", checkScrollPosition);
+    checkScrollPosition();
+    return () => node.removeEventListener("scroll", checkScrollPosition);
+  }, [carouselRef, checkScrollPosition]);
+
   const handleScroll = (direction: "left" | "right") => {
     if (carouselRef.current) {
       carouselRef.current.scrollBy({
         left: direction === "left" ? -scrollBy : scrollBy,
         behavior: "smooth",
       });
+      setTimeout(checkScrollPosition, 350);
     }
   };
 
@@ -47,6 +67,7 @@ export function PersonCarousel({ carouselRef, cast }: PersonCarouselProps) {
         onTouchStart={() => startAutoScroll("left")}
         onTouchEnd={stopAutoScroll}
         aria-label="Scroll left"
+        disabled={atStart}
       >
         <ChevronLeft />
       </Button>
@@ -72,6 +93,7 @@ export function PersonCarousel({ carouselRef, cast }: PersonCarouselProps) {
         onTouchStart={() => startAutoScroll("right")}
         onTouchEnd={stopAutoScroll}
         aria-label="Scroll right"
+        disabled={atEnd}
       >
         <ChevronRight />
       </Button>
