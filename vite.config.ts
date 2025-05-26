@@ -12,6 +12,10 @@ export default defineConfig({
     globals: true,
     setupFiles: "./src/setupTests.ts",
   },
+  server: {
+    host: "0.0.0.0",
+    port: 5173,
+  },
   plugins: [
     checker({ typescript: true }),
     eslint({ include: ["./src/**/*.ts", "./src/**/*.tsx"] }),

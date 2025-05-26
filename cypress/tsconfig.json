@@ -1,0 +1,8 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["cypress"],
+    "allowImportingTsExtensions": false
+  },
+  "include": ["../src", "./**/*.ts", "./**/*.tsx"]
+}
